@@ -1146,17 +1146,15 @@
         const openBtn = document.getElementById('openBtn');
         openBtn.href = deepLink;
 
-        if (isIOS) {
-          openBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = deepLink;
-            setTimeout(() => { window.location.href = targetUrl; }, 1500);
-          });
-        }
-
-        if (isMobile) {
-          setTimeout(() => { window.location.href = deepLink; }, 800);
-        }
+        // Only open on user click — no auto-redirect
+        openBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.location.href = deepLink;
+          // Fallback: if app didn't open, go to browser URL after a delay
+          if (isMobile) {
+            setTimeout(() => { window.location.href = targetUrl; }, 2500);
+          }
+        });
       }
 
     })();
